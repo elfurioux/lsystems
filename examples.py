@@ -1,13 +1,15 @@
 import turtle
 from lsystem import LSystem
 
+### EXAMPLES DEFINITIONS ###
+
 kochcurve = LSystem(
     axiom = "F",
     rules = {
         "F": "F+F-F-F+F"
     },
     angle = 90,
-    length = 10
+    lenght = 2
 )
 
 eviltree = LSystem(
@@ -17,9 +19,20 @@ eviltree = LSystem(
         "Y": "YFX[+Y]-[-Y]+"
     },
     angle = 25.7,
-    length = 3
+    lenght = 0.5
 )
 
-# kochcurve.draw_lsyst(4)
-eviltree.draw_lsyst(6)
-turtle.done()
+eviltree2 = LSystem(
+    axiom = "Y",
+    rules = {
+        "X": "X[-FFF][+FFF][+FFF]-FX",
+        "Y": "YFX[+Y][-Y][-Y]+"
+    },
+    angle = 25.7,
+    lenght = 5
+)
+
+### ACTUAL EXECUTED CODE ###
+
+if __name__=="__main__":
+    eviltree.draw_lsyst(8)
