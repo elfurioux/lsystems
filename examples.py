@@ -1,4 +1,3 @@
-import turtle
 from lsystem import LSystem
 
 ### EXAMPLES DEFINITIONS ###
