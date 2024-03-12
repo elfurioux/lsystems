@@ -1,11 +1,19 @@
 
 import turtle
 
+C_DEFAULT = (0,0,0)
+C_RED = (255,0,0)
+C_GREEN = (0,255,0)
+C_BLUE = (0,0,255)
+
 def turtle_setup(title: str):
     """Turtle initialisation procedure, put the turtle at the bottom of the window,
     in the middle, facing upwards, ready to draw a tree for example."""
     turtle.mode("logo")
     turtle.title(titlestring=title)
+
+    turtle.colormode(255)
+    turtle.color(C_DEFAULT)
 
     turtle.penup()
     turtle.goto(0, -turtle.window_height()//2-5)
@@ -31,8 +39,11 @@ def draw_instructions(instructions: str, lenght: float, angle: float):
 
     stack: list[turtle.Vec2D] = []
 
-    for i, instruction in enumerate(instructions):
+    i = 0
+    while i < len(instructions):
+        instruction = instructions[i]
         if instruction not in ALLOWED_INSTRUCTIONS:
+            i += 1
             continue
         
         # print(f"{i}: {instruction}")
@@ -64,13 +75,31 @@ def draw_instructions(instructions: str, lenght: float, angle: float):
         
         ### SAVE/RESTORE INSTRUCTIONS
         elif instruction == "[": # Sauvegarder la position courante (∈ S) ;
-            stack.append((turtle.pos(),turtle.heading()))
+            stack.append((turtle.pos(),turtle.heading(),turtle.color()))
         elif instruction == "]": # Restaurer la dernière position sauvée (∈ S).
-            pos, hd = stack.pop()
+            pos, hd, c = stack.pop()
             turtle.penup()
             turtle.goto(pos[0],pos[1])
             turtle.setheading(hd)
+            turtle.color(c)
             turtle.pendown()
+
+        ### NONSTANDARD
+        elif instruction == "@": # Color instruction
+            i += 1
+            if instructions[i] == "0":
+                turtle.color(C_DEFAULT)
+            elif instructions[i] == "1":
+                turtle.color(C_RED)
+            elif instructions[i] == "2":
+                turtle.color(C_GREEN)
+            elif instructions[i] == "3":
+                turtle.color(C_BLUE)
+            else:
+                print(f"Unknown color \"{instructions[i]}\"")
+                turtle.color(C_DEFAULT)
+        
+        i += 1
 
 class LSystem:
     def __init__(self, axiom: str, rules: dict[str], angle: float, lenght: float, title: str = "") -> None:
