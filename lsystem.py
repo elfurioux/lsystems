@@ -1,10 +1,27 @@
-
 import turtle
 
-C_DEFAULT = (0,0,0)
-C_RED = (255,0,0)
-C_GREEN = (0,255,0)
-C_BLUE = (0,0,255)
+C_PURE_WHITE     = (255,255,255)
+C_PURE_BLACK     = (0,0,0)
+
+C_PURE_RED       = (255,0,0)
+C_PURE_GREEN     = (0,255,0)
+C_PURE_BLUE      = (0,0,255)
+
+C_PURE_YELLOW    = (255,255,0)
+C_PURE_CYAN      = (0,255,255)
+C_PURE_PURPLE    = (255,0,255)
+
+C_DEFAULT        = C_PURE_BLACK
+C_COLORID        = [
+    C_DEFAULT,
+    C_PURE_RED,
+    C_PURE_GREEN,
+    C_PURE_BLUE,
+    (127,80,32), # BROWN
+    C_PURE_YELLOW,
+    (255,127,0)  # ORANGE
+]
+
 
 def turtle_setup(title: str):
     """Turtle initialisation procedure, put the turtle at the bottom of the window,
@@ -87,14 +104,9 @@ def draw_instructions(instructions: str, lenght: float, angle: float):
         ### NONSTANDARD
         elif instruction == "@": # Color instruction
             i += 1
-            if instructions[i] == "0":
-                turtle.color(C_DEFAULT)
-            elif instructions[i] == "1":
-                turtle.color(C_RED)
-            elif instructions[i] == "2":
-                turtle.color(C_GREEN)
-            elif instructions[i] == "3":
-                turtle.color(C_BLUE)
+            if instructions[i] in "0123456":
+                c = int(instructions[i])
+                turtle.color(C_COLORID[c])
             else:
                 print(f"Unknown color \"{instructions[i]}\"")
                 turtle.color(C_DEFAULT)
@@ -102,12 +114,11 @@ def draw_instructions(instructions: str, lenght: float, angle: float):
         i += 1
 
 class LSystem:
-    def __init__(self, axiom: str, rules: dict[str], angle: float, lenght: float, title: str = "") -> None:
+    def __init__(self, axiom: str, rules: dict[str], angle: float, lenght: float) -> None:
         self.axiom: str         = axiom
         self.rules: dict[str]   = rules
         self.angle: float       = angle
         self.lenght: float      = lenght
-        self.title: str         = title
 
     ### L SYTEM GENERATION
 
@@ -133,11 +144,11 @@ class LSystem:
 
     # L SYSTEM REPRESENTATION
 
-    def draw_lsyst(self, iterations: int, baseangle = 0) -> None:
+    def draw_lsyst(self, iterations: int, baseangle = 0, title = "unnamed") -> None:
         """Main draturtle_setupwing function, takes in parameter a set of rules (`self`)
         and a number of `iterations` of the rules to draw."""
         
-        turtle_setup(self.title + f" G:{iterations}; L:{self.lenght}; A:{self.angle}")
+        turtle_setup(title, f"G:{iterations}; L:{self.lenght}; A:{self.angle}")
         turtle.setheading(baseangle)
         draw_instructions(
             instructions = self.getiteration(iterations),
@@ -146,4 +157,11 @@ class LSystem:
         )
         turtle_end()
     
-    ### TODO: LSYSTEM USER INPUT
+class Plsystem(LSystem):
+    def __init__(self, /, axiom: str, rules: dict[str], angle: float, lenght: float, title: str = "unnamed", baseangle: float = 0.0) -> None:
+        super().__init__(axiom, rules, angle, lenght)
+        self.title: str         = title
+        self.baseangle: float   = baseangle
+
+    def draw_lsyst(self, iterations: int) -> None:
+        return super().draw_lsyst(iterations, self.baseangle, self.title)

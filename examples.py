@@ -1,9 +1,9 @@
-from lsystem import LSystem
+from lsystem import Plsystem
 
 ### EXAMPLES DEFINITIONS ###
 
-examples: list[LSystem] = [
-    LSystem(title = "kochcurve",
+examples: list[Plsystem] = [
+    Plsystem(title = "kochcurve",
         axiom = "F",
         rules = {
             "F": "F+F-F-F+F"
@@ -11,7 +11,7 @@ examples: list[LSystem] = [
         angle = 90,
         lenght = 2
     ),
-    LSystem(title = "ogeviltree",
+    Plsystem(title = "ogeviltree",
         axiom = "Y",
         rules = {
             "X": "X[-FFF][+FFF]FX",
@@ -20,7 +20,7 @@ examples: list[LSystem] = [
         angle = 25.7,
         lenght = 7
     ),
-    LSystem(title = "c-ogeviltree",
+    Plsystem(title = "c-ogeviltree",
         axiom = "Y",
         rules = {
             "X": "X[>FFF][<FFF]FX",
@@ -29,7 +29,7 @@ examples: list[LSystem] = [
         angle = 25.7,
         lenght = 7
     ),
-    LSystem(title = "drunkeviltree",
+    Plsystem(title = "drunkeviltree",
         axiom = "Y",
         rules = {
             "X": "X[-FFF]+[+FFF]-FX",
@@ -38,7 +38,7 @@ examples: list[LSystem] = [
         angle = 25.7,
         lenght = 7
     ),
-    LSystem(title = "sqrtree",
+    Plsystem(title = "sqrtree",
         axiom = "a",
         rules = {
             "F": ">F<",
@@ -50,7 +50,7 @@ examples: list[LSystem] = [
         angle = 45,
         lenght = 7
     ),
-    LSystem(title = "wk2-bintree",
+    Plsystem(title = "wk2-bintree",
         axiom = "0",
         rules = {
             "1": "11",
@@ -59,7 +59,7 @@ examples: list[LSystem] = [
         angle = 45,
         lenght = 3
     ),
-    LSystem(title = "wk5-sierpinsky",
+    Plsystem(title = "wk5-sierpinsky",
         axiom = "F-G-G",
         rules = {
             "F": "F-G+F+G-F",
@@ -68,7 +68,7 @@ examples: list[LSystem] = [
         angle = 120,
         lenght = 5
     ),
-    LSystem(title = "wk6-dcurve",
+    Plsystem(title = "wk6-dcurve",
         axiom = "F",
         rules = {
             "F": "F+G",
@@ -77,7 +77,7 @@ examples: list[LSystem] = [
         angle = 90,
         lenght = 10
     ),
-    LSystem(title = "wk7-fractal-plant",
+    Plsystem(title = "wk7-fractal-plant",
         axiom = "X",
         rules = {
             "X": "F+[[X]-X]-F[-FX]+X",
@@ -105,7 +105,7 @@ def main(argv: list):
     if i >= len(assoc) or i<0:
         raise ValueError("index is too big or too small")
     
-    d: LSystem = examples[i]
+    d: Plsystem = examples[i]
     print(f"drawing \"{d.title}\"...")
     # print(d.getiteration(GENERATIONS))
     d.lenght = d.lenght
