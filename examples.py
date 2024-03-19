@@ -88,6 +88,11 @@ examples: list[Plsystem] = [
     )
 ]
 
+for e in examples:
+    e.save("lsystemsfiles")
+    print(e.title,"saved!")
+
+exit()
 ### ACTUAL EXECUTED CODE ###
 
 GENERATIONS = 6
